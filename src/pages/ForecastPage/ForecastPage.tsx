@@ -51,9 +51,13 @@ const MONTHS = [
   "Dec",
 ]
 
+const isEmptyArray = (arr: any[]): boolean => {
+  return arr.length === 0
+}
+
 const ForecastPage = () => {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
-  const [selectedMonths, setSelectedMonths] = useState<string[]>([""])
+  const [selectedMonths, setSelectedMonths] = useState<string[]>([])
 
   const getMonthsByIndex = (from: number, to: number): string[] => {
     return MONTHS.filter((_, index) => index >= from && index <= to)
@@ -98,7 +102,17 @@ const ForecastPage = () => {
         ></RangePicker>
       </div>
       <div className="forecast__graph-container container">
-        <ForecastGraph graphItems={selectedProducts} months={selectedMonths} />
+        {!isEmptyArray(selectedMonths) && !isEmptyArray(selectedProducts) && (
+          <ForecastGraph
+            graphItems={selectedProducts}
+            months={selectedMonths}
+          />
+        )}
+        {(isEmptyArray(selectedMonths) || isEmptyArray(selectedProducts)) && (
+          <p className="forecast__graph-container__alert-text">
+            Выберите товары и время!
+          </p>
+        )}
       </div>
     </div>
   )
