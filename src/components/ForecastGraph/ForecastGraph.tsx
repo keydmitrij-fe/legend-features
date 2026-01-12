@@ -20,31 +20,17 @@ Chart.register(
   LinearScale
 )
 
-const MONTHS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-]
-
 const LINE_COLORS = ["#a29bfe", "#00b894", "#636e72", "#74b9ff", "#fab1a0"]
 
 type ForecastGraphType = {
   graphItems: Product[]
+  months: string[]
 }
 
 const chartOptions = Chart.defaults
 chartOptions.elements.line.cubicInterpolationMode = "monotone"
 
-const ForecastGraph: React.FC<ForecastGraphType> = ({ graphItems }) => {
+const ForecastGraph: React.FC<ForecastGraphType> = ({ graphItems, months }) => {
   const usedColors: string[] = []
 
   const getRandomColorFromPool = () => {
@@ -62,11 +48,15 @@ const ForecastGraph: React.FC<ForecastGraphType> = ({ graphItems }) => {
       <Line
         options={{ plugins: { legend: { display: false } } }}
         data={{
-          labels: MONTHS,
+          labels: months,
           datasets: graphItems.map((product): ChartDataset<"line"> => {
+            const lowerCaseMonths = months.map((month) => month.toLowerCase())
+            const productEntriesToShow: [string, number][] = Object.entries(
+              product.sales
+            ).filter((item) => lowerCaseMonths.includes(item[0]))
             return {
               label: product.name,
-              data: Object.values(product.sales),
+              data: productEntriesToShow.map((item) => item[1]),
               borderColor: [...LINE_COLORS],
             }
           }),

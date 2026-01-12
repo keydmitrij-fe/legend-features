@@ -36,8 +36,28 @@ const disabled12MonthsDate: DatePickerProps["disabledDate"] = (
 
 const { RangePicker } = DatePicker
 
+const MONTHS = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+]
+
 const ForecastPage = () => {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
+  const [selectedMonths, setSelectedMonths] = useState<string[]>([""])
+
+  const getMonthsByIndex = (from: number, to: number): string[] => {
+    return MONTHS.filter((_, index) => index >= from && index <= to)
+  }
 
   return (
     <div className="forecast">
@@ -66,10 +86,18 @@ const ForecastPage = () => {
           disabledDate={disabled12MonthsDate}
           placeholder={["С", "До"]}
           picker="month"
+          onChange={(e) => {
+            if (e && e[0] && e[1]) {
+              const from = e?.[0]?.month()
+              const to = e?.[1]?.month()
+              const months = getMonthsByIndex(from, to)
+              setSelectedMonths(months)
+            }
+          }}
         ></RangePicker>
       </div>
       <div className="forecast__graph-container container">
-        <ForecastGraph graphItems={selectedProducts} />
+        <ForecastGraph graphItems={selectedProducts} months={selectedMonths} />
       </div>
     </div>
   )
