@@ -3,6 +3,7 @@ import {
   UserOutlined,
   CheckSquareOutlined,
   UserSwitchOutlined,
+  AimOutlined,
 } from "@ant-design/icons"
 import { NavLink, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
@@ -49,6 +50,15 @@ const Sidebar = () => {
       label: (
         <NavLink to="/profile" className="sidebar__link">
           Profile
+        </NavLink>
+      ),
+    },
+    {
+      key: "/forecast",
+      icon: <AimOutlined />,
+      label: (
+        <NavLink to="/forecast" className="sidebar__link">
+          Forecast
         </NavLink>
       ),
     },
