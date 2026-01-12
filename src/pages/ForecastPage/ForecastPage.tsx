@@ -110,7 +110,7 @@ const ForecastPage = () => {
         )}
         {(isEmptyArray(selectedMonths) || isEmptyArray(selectedProducts)) && (
           <p className="forecast__graph-container__alert-text">
-            Выберите товары и время!
+            Выберите товары и промежуток времени!
           </p>
         )}
       </div>
