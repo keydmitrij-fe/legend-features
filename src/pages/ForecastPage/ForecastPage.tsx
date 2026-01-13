@@ -8,7 +8,7 @@ import { isEmptyArray } from "../../utils/array"
 import type { Product } from "../../types/forecast"
 import type { Dayjs } from "dayjs"
 import { getProducts } from "../../api/forecast"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQuery } from "@tanstack/react-query"
 import { getMonthsByIndex } from "../../utils/date"
 
 const { RangePicker } = DatePicker
