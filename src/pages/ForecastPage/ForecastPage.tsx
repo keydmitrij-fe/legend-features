@@ -4,9 +4,10 @@ import { Select, DatePicker } from "antd"
 import type { DatePickerProps } from "antd"
 import ForecastGraph from "../../components/ForecastGraph/ForecastGraph"
 import products from "../../mocks/products"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { Product } from "../../types/forecast"
 import type { Dayjs } from "dayjs"
+import { getProducts } from "../../api/forecast"
 
 const getYearMonth = (date: Dayjs) => date.year() * 12 + date.month()
 const disabled12MonthsDate: DatePickerProps["disabledDate"] = (
