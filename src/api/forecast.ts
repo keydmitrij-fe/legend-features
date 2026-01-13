@@ -5,6 +5,6 @@ export async function getProducts(): Promise<Product[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(products)
-    }, 1500)
+    }, 5000)
   })
 }

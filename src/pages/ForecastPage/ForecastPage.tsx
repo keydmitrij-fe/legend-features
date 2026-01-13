@@ -3,11 +3,11 @@ import Title from "antd/es/typography/Title"
 import { Select, DatePicker } from "antd"
 import type { DatePickerProps } from "antd"
 import ForecastGraph from "../../components/ForecastGraph/ForecastGraph"
-import products from "../../mocks/products"
 import { useEffect, useState } from "react"
 import type { Product } from "../../types/forecast"
 import type { Dayjs } from "dayjs"
 import { getProducts } from "../../api/forecast"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 
 const getYearMonth = (date: Dayjs) => date.year() * 12 + date.month()
 const disabled12MonthsDate: DatePickerProps["disabledDate"] = (
@@ -57,6 +57,13 @@ const isEmptyArray = (arr: any[]): boolean => {
 }
 
 const ForecastPage = () => {
+  const queryClient = useQueryClient()
+  const { data: products, isLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: getProducts,
+    staleTime: Infinity,
+  })
+
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
   const [selectedMonths, setSelectedMonths] = useState<string[]>([])
 
@@ -70,17 +77,19 @@ const ForecastPage = () => {
       <div className="forecast__button-container container">
         <Select
           onChange={(selectedProductsIds: Product["id"][]) => {
-            const selectedItems = products.filter((item) =>
-              selectedProductsIds.includes(item.id)
-            )
-            setSelectedProducts(selectedItems)
+            if (products) {
+              const selectedItems = products.filter((item) =>
+                selectedProductsIds.includes(item.id)
+              )
+              setSelectedProducts(selectedItems)
+            }
           }}
           placeholder="Товары"
           style={{ minWidth: "13ch" }}
           mode="multiple"
           maxCount={5}
           maxTagCount={1}
-          options={products.map((product) => {
+          options={products?.map((product) => {
             return {
               value: product.id,
               label: product.name,

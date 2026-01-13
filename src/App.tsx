@@ -9,33 +9,38 @@ import AuthGuard from "./components/AuthGuard/AuthGuard"
 import UsersPage from "./pages/UsersPage/UsersPage"
 import UserEditPage from "./pages/UserEditPage/UserEditPage"
 import ForecastPage from "./pages/ForecastPage/ForecastPage"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
-    <Routes>
-      <Route element={<AuthLayout />}>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Route>
+    <QueryClientProvider client={queryClient}>
+      <Routes>
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
 
-      <Route
-        path="/"
-        element={
-          <AuthGuard>
-            <MainLayout />
-          </AuthGuard>
-        }
-      >
-        <Route index element={<TodoListPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="users" element={<UsersPage />} />
-        <Route path="forecast" element={<ForecastPage />} />
-        <Route path="users/:userId/edit" element={<UserEditPage />} />
-      </Route>
+        <Route
+          path="/"
+          element={
+            <AuthGuard>
+              <MainLayout />
+            </AuthGuard>
+          }
+        >
+          <Route index element={<TodoListPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="users" element={<UsersPage />} />
+          <Route path="forecast" element={<ForecastPage />} />
+          <Route path="users/:userId/edit" element={<UserEditPage />} />
+        </Route>
 
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </QueryClientProvider>
   )
 }
 
