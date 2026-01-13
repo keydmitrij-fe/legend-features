@@ -85,6 +85,7 @@ const ForecastPage = () => {
             }
           }}
           placeholder="Товары"
+          loading={isLoading}
           style={{ minWidth: "13ch" }}
           mode="multiple"
           maxCount={5}
