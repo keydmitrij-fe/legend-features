@@ -3,12 +3,15 @@ import Title from "antd/es/typography/Title"
 import { Select, DatePicker } from "antd"
 import type { DatePickerProps } from "antd"
 import ForecastGraph from "../../components/ForecastGraph/ForecastGraph"
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { isEmptyArray } from "../../utils/array"
 import type { Product } from "../../types/forecast"
 import type { Dayjs } from "dayjs"
 import { getProducts } from "../../api/forecast"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { getMonthsByIndex } from "../../utils/date"
 
+const { RangePicker } = DatePicker
 const getYearMonth = (date: Dayjs) => date.year() * 12 + date.month()
 const disabled12MonthsDate: DatePickerProps["disabledDate"] = (
   current,
@@ -23,7 +26,6 @@ const disabled12MonthsDate: DatePickerProps["disabledDate"] = (
         return (
           current.year() < minDate.year() || current.year() > maxDate.year()
         )
-
       default:
         return (
           getYearMonth(current) < getYearMonth(minDate) ||
@@ -31,45 +33,17 @@ const disabled12MonthsDate: DatePickerProps["disabledDate"] = (
         )
     }
   }
-
   return false
 }
 
-const { RangePicker } = DatePicker
-
-const MONTHS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-]
-
-const isEmptyArray = (arr: any[]): boolean => {
-  return arr.length === 0
-}
-
 const ForecastPage = () => {
-  const queryClient = useQueryClient()
-  const { data: products, isLoading } = useQuery({
-    queryKey: ["products"],
-    queryFn: getProducts,
-    staleTime: Infinity,
-  })
-
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
   const [selectedMonths, setSelectedMonths] = useState<string[]>([])
 
-  const getMonthsByIndex = (from: number, to: number): string[] => {
-    return MONTHS.filter((_, index) => index >= from && index <= to)
-  }
+  const { data: products, isLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: getProducts,
+  })
 
   return (
     <div className="forecast">
