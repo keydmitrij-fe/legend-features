@@ -17,4 +17,5 @@ export interface Product {
   id: number
   name: string
   sales: MonthlySales
+  forecast: Partial<MonthlySales>
 }
