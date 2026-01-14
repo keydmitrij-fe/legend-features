@@ -48,7 +48,7 @@ const { Text } = Typography
 const ForecastPage = () => {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
   const [selectedMonthsRange, setSelectedMonthsRange] = useState<MonthsRange>()
-
+  const [prevMonthsSelection, setPrevMonthsSelection] = useState<MonthsRange>()
   const [showForecast, setShowForecast] = useState<boolean>(false)
   const [forecastDuration, setForecastDuration] = useState<number>(0)
 
@@ -66,14 +66,22 @@ const ForecastPage = () => {
           popupMatchSelectWidth={false}
           defaultValue={forecastSelectValues[0]}
           options={forecastSelectValues}
-          onChange={(e) => {
-            if (+e === 0) {
+          onChange={(value) => {
+            if (prevMonthsSelection == undefined) {
+              setPrevMonthsSelection(selectedMonthsRange)
+            }
+
+            console.log(selectedMonthsRange)
+            if (+value === 0) {
               setShowForecast(false)
+              setForecastDuration(+value)
+              setSelectedMonthsRange(prevMonthsSelection)
               return
             }
 
             setShowForecast(true)
-            setForecastDuration(+e)
+            setForecastDuration(+value)
+            setSelectedMonthsRange([0, 11])
           }}
         ></Select>
         <Select
@@ -104,11 +112,11 @@ const ForecastPage = () => {
           disabledDate={disabled12MonthsDate}
           placeholder={["С", "До"]}
           picker="month"
-          onChange={(e) => {
-            if (e && e[0] && e[1]) {
-              const from = e?.[0]?.month()
-              const to = e?.[1]?.month()
-              setSelectedMonthsRange([from, to])
+          onChange={(value) => {
+            if (value && value[0] && value[1]) {
+              const fromMonth = value?.[0]?.month()
+              const toMonth = value?.[1]?.month()
+              setSelectedMonthsRange([fromMonth, toMonth])
             }
           }}
         ></RangePicker>
@@ -119,7 +127,7 @@ const ForecastPage = () => {
           <ForecastGraph
             graphItems={selectedProducts}
             monthsRange={selectedMonthsRange}
-            forecast={{ show: true, duration: forecastDuration }}
+            forecast={{ show: showForecast, duration: forecastDuration }}
           />
         )}
         {selectedMonthsRange && isEmptyArray(selectedProducts) && (
