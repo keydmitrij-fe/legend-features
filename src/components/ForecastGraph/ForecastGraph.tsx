@@ -9,7 +9,9 @@ import {
   CategoryScale,
   LinearScale,
 } from "chart.js"
-import { Product } from "../../types/forecast"
+import { MonthsRange, Product } from "../../types/forecast"
+import { getMonthsByIndex } from "../../utils/date"
+import { formToJSON } from "axios"
 
 Chart.register(
   LineController,
@@ -24,23 +26,30 @@ const LINE_COLORS = ["#a29bfe", "#00b894", "#636e72", "#74b9ff", "#fab1a0"]
 
 type ForecastGraphType = {
   graphItems: Product[]
-  months: string[]
+  monthsRange: MonthsRange
+  showForecast?: boolean
+  forecastLength?: number
 }
 
 const chartOptions = Chart.defaults
 chartOptions.elements.line.cubicInterpolationMode = "monotone"
 
-const ForecastGraph: React.FC<ForecastGraphType> = ({ graphItems, months }) => {
-  const usedColors: string[] = []
+const ForecastGraph: React.FC<ForecastGraphType> = ({
+  graphItems,
+  monthsRange,
+  showForecast = false,
+  forecastLength,
+}) => {
+  const [from, to] = [...monthsRange]
+  const months = getMonthsByIndex(from, to)
 
-  const getRandomColorFromPool = () => {
-    const poolLength = LINE_COLORS.length
-    const colorIndex = Math.floor(Math.random() * poolLength)
-    if (usedColors.includes(LINE_COLORS[colorIndex])) {
-      getRandomColorFromPool()
+  const getMonthsToShow = () => {
+    if (!showForecast) {
+      return months
     }
-    usedColors.push(LINE_COLORS[colorIndex])
-    return LINE_COLORS[colorIndex]
+
+    const forecastMonths = "placeholder!"
+    const monthsWithForecast = "months + forecastMonths"
   }
 
   return (
@@ -48,9 +57,10 @@ const ForecastGraph: React.FC<ForecastGraphType> = ({ graphItems, months }) => {
       <Line
         options={{ plugins: { legend: { display: false } } }}
         data={{
-          labels: months,
+          labels: getMonthsToShow(),
           datasets: graphItems.map((product): ChartDataset<"line"> => {
             const lowerCaseMonths = months.map((month) => month.toLowerCase())
+
             const productEntriesToShow: [string, number][] = Object.entries(
               product.sales
             ).filter((item) => lowerCaseMonths.includes(item[0]))

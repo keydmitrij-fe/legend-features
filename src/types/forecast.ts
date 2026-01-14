@@ -19,3 +19,5 @@ export interface Product {
   sales: MonthlySales
   forecast: Partial<MonthlySales>
 }
+
+export type MonthsRange = [number, number] // [From, To]

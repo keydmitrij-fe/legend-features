@@ -5,11 +5,10 @@ import type { DatePickerProps } from "antd"
 import ForecastGraph from "../../components/ForecastGraph/ForecastGraph"
 import { useState } from "react"
 import { isEmptyArray } from "../../utils/array"
-import type { Product } from "../../types/forecast"
+import type { MonthsRange, Product } from "../../types/forecast"
 import type { Dayjs } from "dayjs"
 import { getProducts } from "../../api/forecast"
 import { useQuery } from "@tanstack/react-query"
-import { getMonthsByIndex } from "../../utils/date"
 import { DefaultOptionType } from "antd/es/select"
 
 const { RangePicker } = DatePicker
@@ -48,9 +47,9 @@ const { Text } = Typography
 
 const ForecastPage = () => {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
-  const [selectedMonths, setSelectedMonths] = useState<string[]>([])
+  const [selectedMonthsRange, setSelectedMonthsRange] = useState<MonthsRange>()
 
-  const [isForecast, setIsForecast] = useState<boolean>(false)
+  const [showForecast, setShowForecast] = useState<boolean>(false)
   const [forecastLength, setForecastLength] = useState<number>(0)
 
   const { data: products, isLoading } = useQuery({
@@ -69,11 +68,11 @@ const ForecastPage = () => {
           options={forecastSelectValues}
           onChange={(e) => {
             if (+e === 0) {
-              setIsForecast(false)
+              setShowForecast(false)
               return
             }
 
-            setIsForecast(true)
+            setShowForecast(true)
             setForecastLength(+e)
           }}
         ></Select>
@@ -109,21 +108,21 @@ const ForecastPage = () => {
             if (e && e[0] && e[1]) {
               const from = e?.[0]?.month()
               const to = e?.[1]?.month()
-              const months = getMonthsByIndex(from, to)
-              setSelectedMonths(months)
+              setSelectedMonthsRange([from, to])
             }
           }}
         ></RangePicker>
       </div>
 
       <div className="forecast__graph-container container">
-        {!isEmptyArray(selectedMonths) && !isEmptyArray(selectedProducts) && (
+        {selectedMonthsRange && !isEmptyArray(selectedProducts) && (
           <ForecastGraph
             graphItems={selectedProducts}
-            months={selectedMonths}
+            monthsRange={selectedMonthsRange}
+            showForecast={showForecast}
           />
         )}
-        {(isEmptyArray(selectedMonths) || isEmptyArray(selectedProducts)) && (
+        {selectedMonthsRange && isEmptyArray(selectedProducts) && (
           <p className="forecast__graph-container__alert-text">
             Выберите товары и промежуток времени!
           </p>
