@@ -44,10 +44,14 @@ const forecastSelectValues: DefaultOptionType[] = [
   { value: "6", label: "6 месяцев" },
 ]
 
+const { Text } = Typography
+
 const ForecastPage = () => {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
   const [selectedMonths, setSelectedMonths] = useState<string[]>([])
-  const { Text } = Typography
+
+  const [isForecast, setIsForecast] = useState<boolean>(false)
+  const [forecastLength, setForecastLength] = useState<number>(0)
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["products"],
@@ -63,6 +67,15 @@ const ForecastPage = () => {
           popupMatchSelectWidth={false}
           defaultValue={forecastSelectValues[0]}
           options={forecastSelectValues}
+          onChange={(e) => {
+            if (+e === 0) {
+              setIsForecast(false)
+              return
+            }
+
+            setIsForecast(true)
+            setForecastLength(+e)
+          }}
         ></Select>
         <Select
           onChange={(selectedProductsIds: Product["id"][]) => {
