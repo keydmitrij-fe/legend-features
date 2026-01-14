@@ -22,13 +22,17 @@ Chart.register(
   LinearScale
 )
 
+type Forecast = {
+  show: boolean
+  duration: number
+}
+
 const LINE_COLORS = ["#a29bfe", "#00b894", "#636e72", "#74b9ff", "#fab1a0"]
 
 type ForecastGraphType = {
   graphItems: Product[]
   monthsRange: MonthsRange
-  showForecast?: boolean
-  forecastLength?: number
+  forecast?: Forecast
 }
 
 const chartOptions = Chart.defaults
@@ -37,19 +41,22 @@ chartOptions.elements.line.cubicInterpolationMode = "monotone"
 const ForecastGraph: React.FC<ForecastGraphType> = ({
   graphItems,
   monthsRange,
-  showForecast = false,
-  forecastLength,
+  forecast,
 }) => {
   const [from, to] = [...monthsRange]
   const months = getMonthsByIndex(from, to)
 
   const getMonthsToShow = () => {
-    if (!showForecast) {
-      return months
+    if (forecast?.show) {
+      const forecastMonths = getMonthsByIndex(0, forecast.duration - 1)
+      const decoratedForecastMonths = forecastMonths.map(
+        (month) => month.slice(0) + "*"
+      )
+      const monthsWithForecast = months.concat(decoratedForecastMonths)
+      return monthsWithForecast
     }
 
-    const forecastMonths = "placeholder!"
-    const monthsWithForecast = "months + forecastMonths"
+    return months
   }
 
   return (

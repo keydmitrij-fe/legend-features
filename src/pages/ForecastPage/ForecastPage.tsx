@@ -50,7 +50,7 @@ const ForecastPage = () => {
   const [selectedMonthsRange, setSelectedMonthsRange] = useState<MonthsRange>()
 
   const [showForecast, setShowForecast] = useState<boolean>(false)
-  const [forecastLength, setForecastLength] = useState<number>(0)
+  const [forecastDuration, setForecastDuration] = useState<number>(0)
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["products"],
@@ -73,7 +73,7 @@ const ForecastPage = () => {
             }
 
             setShowForecast(true)
-            setForecastLength(+e)
+            setForecastDuration(+e)
           }}
         ></Select>
         <Select
@@ -119,7 +119,7 @@ const ForecastPage = () => {
           <ForecastGraph
             graphItems={selectedProducts}
             monthsRange={selectedMonthsRange}
-            showForecast={showForecast}
+            forecast={{ show: true, duration: forecastDuration }}
           />
         )}
         {selectedMonthsRange && isEmptyArray(selectedProducts) && (
