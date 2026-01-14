@@ -1,6 +1,6 @@
 import "./ForecastPage.scss"
 import Title from "antd/es/typography/Title"
-import { Select, DatePicker } from "antd"
+import { Select, DatePicker, Typography } from "antd"
 import type { DatePickerProps } from "antd"
 import ForecastGraph from "../../components/ForecastGraph/ForecastGraph"
 import { useState } from "react"
@@ -10,6 +10,7 @@ import type { Dayjs } from "dayjs"
 import { getProducts } from "../../api/forecast"
 import { useQuery } from "@tanstack/react-query"
 import { getMonthsByIndex } from "../../utils/date"
+import { DefaultOptionType } from "antd/es/select"
 
 const { RangePicker } = DatePicker
 const getYearMonth = (date: Dayjs) => date.year() * 12 + date.month()
@@ -36,9 +37,17 @@ const disabled12MonthsDate: DatePickerProps["disabledDate"] = (
   return false
 }
 
+const forecastSelectValues: DefaultOptionType[] = [
+  { value: "0", label: "Выкл" },
+  { value: "1", label: "1 месяц" },
+  { value: "3", label: "3 месяца" },
+  { value: "6", label: "6 месяцев" },
+]
+
 const ForecastPage = () => {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
   const [selectedMonths, setSelectedMonths] = useState<string[]>([])
+  const { Text } = Typography
 
   const { data: products, isLoading } = useQuery({
     queryKey: ["products"],
@@ -49,6 +58,12 @@ const ForecastPage = () => {
     <div className="forecast">
       <Title level={3}>Forecast Page</Title>
       <div className="forecast__button-container container">
+        <Text>Прогноз</Text>
+        <Select
+          popupMatchSelectWidth={false}
+          defaultValue={forecastSelectValues[0]}
+          options={forecastSelectValues}
+        ></Select>
         <Select
           onChange={(selectedProductsIds: Product["id"][]) => {
             if (products) {
@@ -60,6 +75,7 @@ const ForecastPage = () => {
           }}
           placeholder="Товары"
           loading={isLoading}
+          popupMatchSelectWidth={false}
           style={{ minWidth: "13ch" }}
           mode="multiple"
           maxCount={5}
@@ -86,6 +102,7 @@ const ForecastPage = () => {
           }}
         ></RangePicker>
       </div>
+
       <div className="forecast__graph-container container">
         {!isEmptyArray(selectedMonths) && !isEmptyArray(selectedProducts) && (
           <ForecastGraph
