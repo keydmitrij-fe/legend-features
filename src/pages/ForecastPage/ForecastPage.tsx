@@ -3,7 +3,7 @@ import Title from "antd/es/typography/Title"
 import { Select, DatePicker, Typography } from "antd"
 import type { DatePickerProps } from "antd"
 import ForecastGraph from "../../components/ForecastGraph/ForecastGraph"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { isEmptyArray } from "../../utils/array"
 import type { MonthsRange, Product } from "../../types/forecast"
 import type { Dayjs } from "dayjs"
@@ -52,6 +52,12 @@ const ForecastPage = () => {
   const [showForecast, setShowForecast] = useState<boolean>(false)
   const [forecastDuration, setForecastDuration] = useState<number>(0)
 
+  useEffect(() => {
+    if (!showForecast) {
+      setPrevMonthsSelection(selectedMonthsRange)
+    }
+  }, [selectedMonthsRange])
+
   const { data: products, isLoading } = useQuery({
     queryKey: ["products"],
     queryFn: getProducts,
@@ -67,18 +73,12 @@ const ForecastPage = () => {
           defaultValue={forecastSelectValues[0]}
           options={forecastSelectValues}
           onChange={(value) => {
-            if (prevMonthsSelection == undefined) {
-              setPrevMonthsSelection(selectedMonthsRange)
-            }
-
-            console.log(selectedMonthsRange)
             if (+value === 0) {
               setShowForecast(false)
               setForecastDuration(+value)
               setSelectedMonthsRange(prevMonthsSelection)
               return
             }
-
             setShowForecast(true)
             setForecastDuration(+value)
             setSelectedMonthsRange([0, 11])
