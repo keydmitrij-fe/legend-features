@@ -112,13 +112,12 @@ const ForecastPage = () => {
           disabledDate={disabled12MonthsDate}
           placeholder={["С", "До"]}
           picker="month"
+          allowClear={false}
           onChange={(value) => {
             if (value && value[0] && value[1]) {
               const fromMonth = value?.[0]?.month()
               const toMonth = value?.[1]?.month()
               setSelectedMonthsRange([fromMonth, toMonth])
-              console.log("selprods", selectedProducts)
-              console.log("isemptyselprods", isEmptyArray(selectedProducts))
             }
           }}
         ></RangePicker>
@@ -132,12 +131,11 @@ const ForecastPage = () => {
             forecast={{ show: showForecast, duration: forecastDuration }}
           />
         )}
-        {!selectedMonthsRange ||
-          (isEmptyArray(selectedProducts) && (
-            <p className="forecast__graph-container__alert-text">
-              Выберите товары и промежуток времени!
-            </p>
-          ))}
+        {(!selectedMonthsRange || isEmptyArray(selectedProducts)) && (
+          <p className="forecast__graph-container__alert-text">
+            Выберите товары и промежуток времени!
+          </p>
+        )}
       </div>
     </div>
   )
