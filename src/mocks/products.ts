@@ -1,6 +1,24 @@
-import { Product } from "../types/forecast"
+import { Product, WarehouseStock } from "../types/forecast"
 
-const productsWithForecast: Product[] = [
+const WAREHOUSES = [
+  "Основной склад (Мск)",
+  "Региональный хаб (СПб)",
+  "Склад Восток (Екб)",
+  "Южный терминал (Крд)",
+  "Сибирь-Логистик (Нск)",
+  "Склад Запад (Клг)",
+  "Центральный архив (Твр)",
+]
+
+const generateStocks = (baseStock: number): WarehouseStock[] => {
+  return WAREHOUSES.map((name, index) => ({
+    id: index + 1,
+    name: name,
+    stock: Math.floor(Math.random() * baseStock) + 5,
+  }))
+}
+
+const products: Product[] = [
   {
     id: 1,
     name: "Игровая консоль NextGen",
@@ -19,6 +37,7 @@ const productsWithForecast: Product[] = [
       dec: 1200,
     },
     forecast: { jan: 900, feb: 350, mar: 230, apr: 160, may: 130, jun: 115 },
+    stocks: generateStocks(300),
   },
   {
     id: 2,
@@ -38,6 +57,7 @@ const productsWithForecast: Product[] = [
       dec: 15,
     },
     forecast: { jan: 12, feb: 20, mar: 100, apr: 250, may: 500, jun: 850 },
+    stocks: generateStocks(150),
   },
   {
     id: 3,
@@ -57,6 +77,7 @@ const productsWithForecast: Product[] = [
       dec: 480,
     },
     forecast: { jan: 420, feb: 410, mar: 430, apr: 420, may: 425, jun: 415 },
+    stocks: generateStocks(1000),
   },
   {
     id: 4,
@@ -76,6 +97,7 @@ const productsWithForecast: Product[] = [
       dec: 210,
     },
     forecast: { jan: 180, feb: 190, mar: 170, apr: 50, may: 20, jun: 15 },
+    stocks: generateStocks(80),
   },
   {
     id: 5,
@@ -95,6 +117,7 @@ const productsWithForecast: Product[] = [
       dec: 1100,
     },
     forecast: { jan: 1200, feb: 1150, mar: 1000, apr: 950, may: 900, jun: 850 },
+    stocks: generateStocks(400),
   },
   {
     id: 6,
@@ -114,6 +137,7 @@ const productsWithForecast: Product[] = [
       dec: 550,
     },
     forecast: { jan: 120, feb: 480, mar: 400, apr: 140, may: 160, jun: 130 },
+    stocks: generateStocks(200),
   },
   {
     id: 7,
@@ -132,7 +156,8 @@ const productsWithForecast: Product[] = [
       nov: 30,
       dec: 10,
     },
-    forecast: { jan: 5, feb: 2, mar: 0, apr: 0, may: 0, jun: 0 }, // Модель устаревает
+    forecast: { jan: 5, feb: 2, mar: 0, apr: 0, may: 0, jun: 0 },
+    stocks: generateStocks(40), // Низкий остаток, так как модель устарела
   },
   {
     id: 8,
@@ -152,6 +177,7 @@ const productsWithForecast: Product[] = [
       dec: 950,
     },
     forecast: { jan: 100, feb: 850, mar: 120, apr: 90, may: 800, jun: 100 },
+    stocks: generateStocks(120),
   },
   {
     id: 9,
@@ -171,6 +197,7 @@ const productsWithForecast: Product[] = [
       dec: 300,
     },
     forecast: { jan: 220, feb: 230, mar: 250, apr: 240, may: 200, jun: 120 },
+    stocks: generateStocks(180),
   },
   {
     id: 10,
@@ -190,6 +217,7 @@ const productsWithForecast: Product[] = [
       dec: 600,
     },
     forecast: { jan: 150, feb: 160, mar: 170, apr: 130, may: 120, jun: 100 },
+    stocks: generateStocks(250),
   },
   {
     id: 11,
@@ -209,6 +237,7 @@ const productsWithForecast: Product[] = [
       dec: 900,
     },
     forecast: { jan: 400, feb: 420, mar: 380, apr: 350, may: 370, jun: 400 },
+    stocks: generateStocks(600),
   },
   {
     id: 12,
@@ -228,6 +257,7 @@ const productsWithForecast: Product[] = [
       dec: 300,
     },
     forecast: { jan: 120, feb: 130, mar: 140, apr: 180, may: 190, jun: 170 },
+    stocks: generateStocks(300),
   },
   {
     id: 13,
@@ -247,6 +277,7 @@ const productsWithForecast: Product[] = [
       dec: 250,
     },
     forecast: { jan: 80, feb: 90, mar: 110, apr: 100, may: 85, jun: 70 },
+    stocks: generateStocks(140),
   },
   {
     id: 14,
@@ -266,6 +297,7 @@ const productsWithForecast: Product[] = [
       dec: 400,
     },
     forecast: { jan: 200, feb: 190, mar: 210, apr: 200, may: 220, jun: 210 },
+    stocks: generateStocks(220),
   },
   {
     id: 15,
@@ -285,6 +317,7 @@ const productsWithForecast: Product[] = [
       dec: 280,
     },
     forecast: { jan: 240, feb: 235, mar: 245, apr: 250, may: 240, jun: 230 },
+    stocks: generateStocks(180),
   },
   {
     id: 16,
@@ -304,6 +337,7 @@ const productsWithForecast: Product[] = [
       dec: 240,
     },
     forecast: { jan: 90, feb: 85, mar: 110, apr: 105, may: 95, jun: 90 },
+    stocks: generateStocks(110),
   },
   {
     id: 17,
@@ -323,6 +357,7 @@ const productsWithForecast: Product[] = [
       dec: 600,
     },
     forecast: { jan: 250, feb: 230, mar: 270, apr: 320, may: 450, jun: 600 },
+    stocks: generateStocks(450),
   },
   {
     id: 18,
@@ -342,6 +377,7 @@ const productsWithForecast: Product[] = [
       dec: 550,
     },
     forecast: { jan: 450, feb: 430, mar: 460, apr: 470, may: 450, jun: 440 },
+    stocks: generateStocks(800),
   },
   {
     id: 19,
@@ -361,6 +397,7 @@ const productsWithForecast: Product[] = [
       dec: 400,
     },
     forecast: { jan: 650, feb: 350, mar: 280, apr: 220, may: 200, jun: 170 },
+    stocks: generateStocks(320),
   },
   {
     id: 20,
@@ -380,6 +417,8 @@ const productsWithForecast: Product[] = [
       dec: 350,
     },
     forecast: { jan: 150, feb: 140, mar: 160, apr: 165, may: 150, jun: 140 },
+    stocks: generateStocks(500),
   },
 ]
-export default productsWithForecast
+
+export default products
