@@ -1,13 +1,13 @@
 import { Product, WarehouseStock } from "../types/forecast"
 
-const WAREHOUSES = [
-  "Основной склад (Мск)",
-  "Региональный хаб (СПб)",
-  "Склад Восток (Екб)",
-  "Южный терминал (Крд)",
-  "Сибирь-Логистик (Нск)",
-  "Склад Запад (Клг)",
-  "Центральный архив (Твр)",
+export const WAREHOUSES = [
+  "Москва",
+  "Санкт-Петербург",
+  "Екатеринбург",
+  "Краснодар",
+  "Новосибирск",
+  "Калининград",
+  "Тверь",
 ]
 
 const generateStocks = (baseStock: number): WarehouseStock[] => {
