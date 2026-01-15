@@ -66,8 +66,14 @@ const ForecastGraph: React.FC<ForecastGraphType> = ({
       })
 
       data = productEntriesToShow
+
       if (forecast) {
-        const productForecastEntriesToShow = Object.entries(product.forecast)
+        const productForecastEntries = Object.entries(product.forecast)
+        const productForecastEntriesToShow = productForecastEntries.splice(
+          0,
+          forecast.duration
+        )
+
         data = productEntriesToShow.concat(productForecastEntriesToShow)
       }
 
@@ -77,6 +83,32 @@ const ForecastGraph: React.FC<ForecastGraphType> = ({
         label: product.name,
         data: salesData,
         borderColor: [...LINE_COLORS],
+        segment: {
+          borderDash(ctx) {
+            if (forecast) {
+              const firstForecastPoint =
+                salesData.length - forecast.duration - 1
+              const lastForecastPoint = salesData.length - 1
+              const getRangeFromPoints = (
+                from: number,
+                to: number
+              ): number[] => {
+                const arr: number[] = []
+                for (let i = from; i < to; i++) {
+                  arr.push(i)
+                }
+                return arr
+              }
+              const forecastRange = getRangeFromPoints(
+                firstForecastPoint,
+                lastForecastPoint
+              )
+              if (forecastRange.includes(ctx.p0DataIndex)) {
+                return [10, 10]
+              }
+            }
+          },
+        },
       }
     })
   }
