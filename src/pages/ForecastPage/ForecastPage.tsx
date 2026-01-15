@@ -10,6 +10,8 @@ import type { Dayjs } from "dayjs"
 import { getProducts } from "../../api/forecast"
 import { useQuery } from "@tanstack/react-query"
 import { DefaultOptionType } from "antd/es/select"
+import ForecastTable from "../../components/ForecastTable/ForecastTable"
+import { redistributionMockData } from "../../mocks/redistribution"
 
 const { RangePicker } = DatePicker
 const getYearMonth = (date: Dayjs) => date.year() * 12 + date.month()
@@ -138,6 +140,12 @@ const ForecastPage = () => {
             Выберите товары и промежуток времени!
           </p>
         )}
+      </div>
+      <div className="forecast__table-container container">
+        <ForecastTable
+          products={products}
+          redistributionPlans={redistributionMockData}
+        />
       </div>
     </div>
   )
