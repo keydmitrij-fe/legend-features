@@ -25,9 +25,9 @@ function App() {
         <Route
           path="/"
           element={
-            <AuthGuard>
-              <MainLayout />
-            </AuthGuard>
+            // <AuthGuard>
+            <MainLayout />
+            // </AuthGuard>
           }
         >
           <Route index element={<TodoListPage />} />
