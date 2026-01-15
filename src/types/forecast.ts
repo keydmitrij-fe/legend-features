@@ -17,7 +17,7 @@ export interface Product {
   id: number
   name: string
   sales: MonthlySales
-  forecast: Partial<MonthlySales>
+  forecast: Omit<MonthlySales, "jul" | "aug" | "sep" | "oct" | "nov" | "dec">
 }
 
 export type MonthsRange = [number, number] // [From, To]
