@@ -110,6 +110,8 @@ const ForecastPage = () => {
         <RangePicker
           format="MMM YYYY"
           disabledDate={disabled12MonthsDate}
+          allowEmpty
+          disabled={showForecast}
           placeholder={["С", "До"]}
           picker="month"
           allowClear={false}
