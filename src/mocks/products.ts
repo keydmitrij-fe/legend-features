@@ -1,19 +1,24 @@
 import { Product, WarehouseStock } from "../types/forecast"
 
+export type Warehouse = {
+  name: string
+  id: number
+}
+
 export const WAREHOUSES = [
-  "Москва",
-  "Санкт-Петербург",
-  "Екатеринбург",
-  "Краснодар",
-  "Новосибирск",
-  "Калининград",
-  "Тверь",
-]
+  { name: "Москва", id: 1 },
+  { name: "Спб", id: 2 },
+  { name: "Екатеринбург", id: 3 },
+  { name: "Краснодар", id: 4 },
+  { name: "Новосибирск", id: 5 },
+  { name: "Калининград", id: 6 },
+  { name: "Тверь", id: 7 },
+] as const
 
 const generateStocks = (baseStock: number): WarehouseStock[] => {
-  return WAREHOUSES.map((name, index) => ({
-    id: index + 1,
-    name: name,
+  return WAREHOUSES.map((warehouse, index) => ({
+    id: warehouse.id,
+    name: warehouse.name,
     stock: Math.floor(Math.random() * baseStock) + 5,
   }))
 }

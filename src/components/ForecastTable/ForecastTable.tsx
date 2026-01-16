@@ -1,46 +1,59 @@
-import { Table, TableProps } from "antd"
+import { Table, type TableProps } from "antd"
 import {
   Product,
   RedistributionPlan,
   WarehouseStock,
 } from "../../types/forecast"
-import { WAREHOUSES } from "../../mocks/products"
+import { Warehouse, WAREHOUSES } from "../../mocks/products"
+import { useEffect, useState } from "react"
+import { ColumnsType } from "antd/es/table"
 
-type ForecastTableType = {
-  products?: Product[]
-  redistributionPlans?: RedistributionPlan[]
+type ForecastTableType = TableProps<DataType> & {
+  products: Product[]
+  redistributionPlans: RedistributionPlan[]
+}
+
+type WarehouseNames = {
+  [K in (typeof WAREHOUSES)[number]["name"]]: number
 }
 
 type DataType = {
   key: string
   name: Product["name"]
-  stocks: WarehouseStock[]
-}
+} & WarehouseNames
+
+const warehouseColumns = WAREHOUSES.map((warehouse) => ({
+  title: warehouse.name,
+  dataIndex: warehouse.name,
+  key: warehouse.name,
+}))
+
+const columns: ColumnsType<DataType> = [
+  { title: "Название товара", dataIndex: "name", key: "name" },
+  ...warehouseColumns,
+]
 
 const ForecastTable: React.FC<ForecastTableType> = ({
   products,
   redistributionPlans,
+  ...props
 }) => {
-  // const columns: TableProps<DataType>["columns"] = products?.map((product) => {
-  //   return {
-  //     title: product.name,
-  //     dataIndex: product.id,
-  //     key: product.id,
-  //   }
-  // })
+  const data: DataType[] = products?.map((product) => {
+    const result: any = {
+      key: product.name,
+      name: product.name,
+    }
 
-  const warehouseColumns = WAREHOUSES.map((name) => ({
-    title: name,
-    dataIndex: name,
-    key: name,
-  }))
+    product.stocks.forEach((stock) => {
+      const warehouseName = stock.name
+      const quantity: number = stock.stock
+      result[warehouseName] = quantity
+    })
 
-  const columns: TableProps<DataType>["columns"] = [
-    { title: "Товар" },
-    ...warehouseColumns,
-  ]
+    return result
+  })
 
-  return <Table<DataType> columns={columns} />
+  return <Table<DataType> {...props} columns={columns} dataSource={data} />
 }
 
 export default ForecastTable

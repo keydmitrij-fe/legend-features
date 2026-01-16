@@ -1,6 +1,6 @@
 import "./ForecastPage.scss"
 import Title from "antd/es/typography/Title"
-import { Select, DatePicker, Typography } from "antd"
+import { Select, DatePicker, Typography, Spin } from "antd"
 import type { DatePickerProps } from "antd"
 import ForecastGraph from "../../components/ForecastGraph/ForecastGraph"
 import { useEffect, useState } from "react"
@@ -142,10 +142,13 @@ const ForecastPage = () => {
         )}
       </div>
       <div className="forecast__table-container container">
-        <ForecastTable
-          products={products}
-          redistributionPlans={redistributionMockData}
-        />
+        {products && (
+          <ForecastTable
+            loading={isLoading}
+            products={products}
+            redistributionPlans={redistributionMockData}
+          />
+        )}
       </div>
     </div>
   )
