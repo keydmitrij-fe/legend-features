@@ -1,10 +1,6 @@
 import { Table, type TableProps } from "antd"
-import {
-  Product,
-  RedistributionPlan,
-  WarehouseStock,
-} from "../../types/forecast"
-import { Warehouse, WAREHOUSES } from "../../mocks/products"
+import { Product, RedistributionPlan } from "../../types/forecast"
+import { WAREHOUSES } from "../../mocks/products"
 import { useEffect, useState } from "react"
 import { ColumnsType } from "antd/es/table"
 
