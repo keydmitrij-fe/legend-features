@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 import { ColumnsType } from "antd/es/table"
 
 type ForecastTableType = TableProps<DataType> & {
-  products: Product[]
+  products?: Product[]
   redistributionPlans: RedistributionPlan[]
 }
 
@@ -38,20 +38,27 @@ const ForecastTable: React.FC<ForecastTableType> = ({
   redistributionPlans,
   ...props
 }) => {
-  const data: DataType[] = products?.map((product) => {
-    const result: any = {
-      key: product.name,
-      name: product.name,
-    }
+  const [data, setData] = useState<DataType[]>([])
+  useEffect(() => {
+    if (!products) return
 
-    product.stocks.forEach((stock) => {
-      const warehouseName = stock.name
-      const quantity: number = stock.stock
-      result[warehouseName] = quantity
+    const data: DataType[] = products?.map((product) => {
+      const result: any = {
+        key: product.name,
+        name: product.name,
+      }
+
+      product.stocks.forEach((stock) => {
+        const warehouseName = stock.name
+        const quantity: number = stock.stock
+        result[warehouseName] = quantity
+      })
+
+      return result
     })
 
-    return result
-  })
+    setData(data)
+  }, [products])
 
   return <Table<DataType> {...props} columns={columns} dataSource={data} />
 }

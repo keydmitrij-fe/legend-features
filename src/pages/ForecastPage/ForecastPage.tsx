@@ -142,13 +142,11 @@ const ForecastPage = () => {
         )}
       </div>
       <div className="forecast__table-container container">
-        {products && (
-          <ForecastTable
-            loading={isLoading}
-            products={products}
-            redistributionPlans={redistributionMockData}
-          />
-        )}
+        <ForecastTable
+          loading={isLoading}
+          products={products}
+          redistributionPlans={redistributionMockData}
+        />
       </div>
     </div>
   )
