@@ -1,4 +1,4 @@
-import { Table, Button, type TableProps } from "antd"
+import { Table, Drawer, Button, type TableProps } from "antd"
 import { Product, RedistributionPlan } from "../../types/forecast"
 import { WAREHOUSES } from "../../mocks/products"
 import { useEffect, useState } from "react"
@@ -36,6 +36,7 @@ const ForecastTable: React.FC<ForecastTableType> = ({
   ...props
 }) => {
   const [data, setData] = useState<DataType[]>([])
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
   useEffect(() => {
     if (!products) return
 
@@ -66,9 +67,21 @@ const ForecastTable: React.FC<ForecastTableType> = ({
         <Button className="forecast-table__action-buttons">
           Скачать Excel
         </Button>
-        <Button className="forecast-table__action-buttons">
+        <Button
+          onClick={() => {
+            setIsDrawerOpen(true)
+          }}
+          className="forecast-table__action-buttons"
+        >
           Настроить таблицу
         </Button>
+        <Drawer
+          open={isDrawerOpen}
+          closable={{ "aria-label": "Close Button" }}
+          onClose={() => setIsDrawerOpen(false)}
+        >
+          There will be table info
+        </Drawer>
       </div>
       <div className="forecast-table__content-container">
         <Table<DataType> {...props} columns={columns} dataSource={data} />
