@@ -1,4 +1,4 @@
-import { Table, Drawer, Button, type TableProps } from "antd"
+import { Table, Checkbox, Drawer, Button, type TableProps } from "antd"
 import { Product, RedistributionPlan } from "../../types/forecast"
 import { WAREHOUSES } from "../../mocks/products"
 import { useEffect, useState } from "react"
@@ -36,6 +36,7 @@ const ForecastTable: React.FC<ForecastTableType> = ({
   ...props
 }) => {
   const [data, setData] = useState<DataType[]>([])
+  const [selectedProducts, setSelectedProducts] = useState<DataType[]>()
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
   useEffect(() => {
     if (!products) return
@@ -56,6 +57,9 @@ const ForecastTable: React.FC<ForecastTableType> = ({
     })
 
     setData(data)
+    if (!selectedProducts) {
+      setSelectedProducts(data)
+    }
   }, [products])
 
   return (
@@ -80,11 +84,20 @@ const ForecastTable: React.FC<ForecastTableType> = ({
           closable={{ "aria-label": "Close Button" }}
           onClose={() => setIsDrawerOpen(false)}
         >
-          There will be table info
+          {products?.map((product) => (
+            <div style={{ display: "flex", gap: "0.5rem", padding: "0.2rem" }}>
+              <Checkbox onChange={() => {}} defaultChecked={true}></Checkbox>
+              <p>{product.name}</p>
+            </div>
+          ))}
         </Drawer>
       </div>
       <div className="forecast-table__content-container">
-        <Table<DataType> {...props} columns={columns} dataSource={data} />
+        <Table<DataType>
+          {...props}
+          columns={columns}
+          dataSource={selectedProducts}
+        />
       </div>
     </div>
   )
