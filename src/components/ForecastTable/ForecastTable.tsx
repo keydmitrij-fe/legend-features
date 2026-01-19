@@ -1,8 +1,9 @@
-import { Table, type TableProps } from "antd"
+import { Table, Button, type TableProps } from "antd"
 import { Product, RedistributionPlan } from "../../types/forecast"
 import { WAREHOUSES } from "../../mocks/products"
 import { useEffect, useState } from "react"
 import { ColumnsType } from "antd/es/table"
+import "./ForecastTable.scss"
 
 type ForecastTableType = TableProps<DataType> & {
   products?: Product[]
@@ -56,7 +57,22 @@ const ForecastTable: React.FC<ForecastTableType> = ({
     setData(data)
   }, [products])
 
-  return <Table<DataType> {...props} columns={columns} dataSource={data} />
+  return (
+    <div className="forecast-table__container">
+      <div className="forecast-table__action-buttons__container">
+        <Button className="forecast-table__action-buttons">
+          Перераспределить остатки
+        </Button>
+        <Button className="forecast-table__action-buttons">
+          Скачать Excel
+        </Button>
+        <Button className="forecast-table__action-buttons">
+          Настроить таблицу
+        </Button>
+      </div>
+      <Table<DataType> {...props} columns={columns} dataSource={data} />
+    </div>
+  )
 }
 
 export default ForecastTable
