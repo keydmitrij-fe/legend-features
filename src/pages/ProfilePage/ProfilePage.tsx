@@ -11,7 +11,7 @@ const ProfilePage = () => {
     try {
       exit()
     } catch (error) {
-      alert("HTTP error! Restart your browser.")
+      console.log("HTTP error! Restart your browser.")
     }
   }
 

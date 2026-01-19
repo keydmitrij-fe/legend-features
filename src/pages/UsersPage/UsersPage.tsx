@@ -36,7 +36,7 @@ const UsersPage = () => {
       setUsers(response.data)
       setTotalUsers(response.meta.totalAmount)
     } catch (error) {
-      alert("HTTP error! Restart your browser.")
+      console.log("HTTP error! Restart your browser.")
     }
   }
 
@@ -68,7 +68,7 @@ const UsersPage = () => {
       await deleteUser(userId)
       await fetchUsers(filters)
     } catch (error) {
-      alert("HTTP error! Restart your browser.")
+      console.log("HTTP error! Restart your browser.")
     }
   }
 
@@ -78,7 +78,7 @@ const UsersPage = () => {
       await blockUser(userId)
       await fetchUsers(filters)
     } catch (error) {
-      alert("HTTP error! Restart your browser.")
+      console.log("HTTP error! Restart your browser.")
     }
   }
 
@@ -88,7 +88,7 @@ const UsersPage = () => {
       await unblockUser(userId)
       await fetchUsers(filters)
     } catch (error) {
-      alert("HTTP error! Restart your browser.")
+      console.log("HTTP error! Restart your browser.")
     }
   }
 
@@ -98,7 +98,7 @@ const UsersPage = () => {
       await updateUserRights(userId, newRoles)
       await fetchUsers(filters)
     } catch (error) {
-      alert("HTTP error! Restart your browser.")
+      console.log("HTTP error! Restart your browser.")
     }
   }
 

@@ -36,7 +36,7 @@ const UserEditPage = () => {
           phoneNumber: user.phoneNumber || "",
         })
       } catch {
-        alert("HTTP error! Restart your browser.")
+        console.log("HTTP error! Restart your browser.")
       }
     }
 
@@ -62,14 +62,14 @@ const UserEditPage = () => {
         Number(userId),
         updateData.username,
         updateData.email,
-        updateData.phoneNumber
+        updateData.phoneNumber,
       )
 
       const updatedUser = await getUserById(Number(userId))
       setUserData(updatedUser)
       setIsEditing(false)
     } catch {
-      alert("HTTP error! Restart your browser.")
+      console.log("HTTP error! Restart your browser.")
     }
   }
 
