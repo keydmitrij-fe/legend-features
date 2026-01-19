@@ -1,3 +1,15 @@
-.forecast-table__container {
-  border: 2px solid red;
+.forecast__table-container {
+  border-radius: 8px;
+}
+.forecast-table__content-container {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  // border: 1px solid grey;
+}
+
+.forecast-table__action-buttons__container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin: 1rem 0;
 }

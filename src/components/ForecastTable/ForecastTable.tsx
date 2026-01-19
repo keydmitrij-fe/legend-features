@@ -58,7 +58,7 @@ const ForecastTable: React.FC<ForecastTableType> = ({
   }, [products])
 
   return (
-    <div className="forecast-table__container">
+    <div>
       <div className="forecast-table__action-buttons__container">
         <Button className="forecast-table__action-buttons">
           Перераспределить остатки
@@ -70,7 +70,9 @@ const ForecastTable: React.FC<ForecastTableType> = ({
           Настроить таблицу
         </Button>
       </div>
-      <Table<DataType> {...props} columns={columns} dataSource={data} />
+      <div className="forecast-table__content-container">
+        <Table<DataType> {...props} columns={columns} dataSource={data} />
+      </div>
     </div>
   )
 }
