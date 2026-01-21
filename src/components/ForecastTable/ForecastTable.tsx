@@ -96,7 +96,6 @@ const ForecastTable: React.FC<ForecastTableType> = ({
         >
           {products?.map((product) => {
             if (!selectedProducts) return
-            console.log("Selected:", selectedProducts)
             const isInSelectedProducts = selectedProducts?.some(
               (item) => item.productId === product.id,
             )
@@ -107,9 +106,16 @@ const ForecastTable: React.FC<ForecastTableType> = ({
               >
                 <Checkbox
                   onChange={() => {
-                    setSelectedProducts((prev) => {
-                      return prev
-                    })
+                    if (isInSelectedProducts) {
+                      setSelectedProducts((prev) => {
+                        return prev?.filter(
+                          (item) => item.productId !== product.id,
+                        )
+                      })
+                    } else {
+                      //
+                    }
+                    console.log(selectedProducts)
                   }}
                   checked={isInSelectedProducts}
                 ></Checkbox>
