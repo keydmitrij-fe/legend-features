@@ -95,14 +95,24 @@ const ForecastTable: React.FC<ForecastTableType> = ({
           onClose={() => setIsDrawerOpen(false)}
         >
           {products?.map((product) => {
-            // console.log("Includes?:", selectedProducts?.includes(product.id))
-            console.log("Selected products:", selectedProducts)
-            // Нужно чекнуть есть ли в массиве из выбранных продуктов обьект с айдишником текущего продукта
+            if (!selectedProducts) return
+            console.log("Selected:", selectedProducts)
+            const isInSelectedProducts = selectedProducts?.some(
+              (item) => item.productId === product.id,
+            )
             return (
               <div
+                key={product.id}
                 style={{ display: "flex", gap: "0.5rem", padding: "0.2rem" }}
               >
-                <Checkbox onChange={() => {}} defaultChecked={true}></Checkbox>
+                <Checkbox
+                  onChange={() => {
+                    setSelectedProducts((prev) => {
+                      return prev
+                    })
+                  }}
+                  checked={isInSelectedProducts}
+                ></Checkbox>
                 <p>{product.name}</p>
               </div>
             )
