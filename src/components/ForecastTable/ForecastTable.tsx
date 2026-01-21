@@ -1,7 +1,11 @@
 import { Table, Checkbox, Drawer, Button, type TableProps } from "antd"
-import { Product, RedistributionPlan } from "../../types/forecast"
+import {
+  Product,
+  RedistributionPlan,
+  WarehouseContent,
+} from "../../types/forecast"
 import { WAREHOUSES } from "../../mocks/products"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ColumnsType } from "antd/es/table"
 import "./ForecastTable.scss"
 
@@ -10,14 +14,11 @@ type ForecastTableType = TableProps<DataType> & {
   redistributionPlans: RedistributionPlan[]
 }
 
-type WarehouseNames = {
-  [K in (typeof WAREHOUSES)[number]["name"]]: number
-}
-
 type DataType = {
   key: string
-  name: Product["name"]
-} & WarehouseNames
+  productName: Product["name"]
+  productId: Product["id"]
+} & WarehouseContent
 
 const warehouseColumns = WAREHOUSES.map((warehouse) => ({
   title: warehouse.name,
@@ -38,13 +39,22 @@ const ForecastTable: React.FC<ForecastTableType> = ({
   const [data, setData] = useState<DataType[]>([])
   const [selectedProducts, setSelectedProducts] = useState<DataType[]>()
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
+
   useEffect(() => {
     if (!products) return
 
     const data: DataType[] = products?.map((product) => {
-      const result: any = {
+      const result: DataType = {
         key: product.name,
-        name: product.name,
+        productName: product.name,
+        productId: product.id,
+        Екатеринбург: 0,
+        Калининград: 0,
+        Краснодар: 0,
+        Москва: 0,
+        Новосибирск: 0,
+        Спб: 0,
+        Тверь: 0,
       }
 
       product.stocks.forEach((stock) => {
@@ -84,12 +94,19 @@ const ForecastTable: React.FC<ForecastTableType> = ({
           closable={{ "aria-label": "Close Button" }}
           onClose={() => setIsDrawerOpen(false)}
         >
-          {products?.map((product) => (
-            <div style={{ display: "flex", gap: "0.5rem", padding: "0.2rem" }}>
-              <Checkbox onChange={() => {}} defaultChecked={true}></Checkbox>
-              <p>{product.name}</p>
-            </div>
-          ))}
+          {products?.map((product) => {
+            // console.log("Includes?:", selectedProducts?.includes(product.id))
+            console.log("Selected products:", selectedProducts)
+            // Нужно чекнуть есть ли в массиве из выбранных продуктов обьект с айдишником текущего продукта
+            return (
+              <div
+                style={{ display: "flex", gap: "0.5rem", padding: "0.2rem" }}
+              >
+                <Checkbox onChange={() => {}} defaultChecked={true}></Checkbox>
+                <p>{product.name}</p>
+              </div>
+            )
+          })}
         </Drawer>
       </div>
       <div className="forecast-table__content-container">

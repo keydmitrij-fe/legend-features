@@ -1,3 +1,5 @@
+import { WAREHOUSES } from "../mocks/products"
+
 export interface MonthlySales {
   jan: number
   feb: number
@@ -21,9 +23,15 @@ export interface Product {
   stocks: WarehouseStock[]
 }
 
+export type WarehouseContent = {
+  [K in (typeof WAREHOUSES)[number]["name"]]: number
+}
+
+export type WarehouseNamesUnion = (typeof WAREHOUSES)[number]["name"]
+
 export interface WarehouseStock {
   id: number
-  name: string
+  name: WarehouseNamesUnion
   stock: number
 }
 
