@@ -8,7 +8,7 @@ import { WAREHOUSES } from "../../mocks/products"
 import { CSSProperties, useEffect, useRef, useState } from "react"
 import { ColumnsType } from "antd/es/table"
 import "./ForecastTable.scss"
-import { setLabels } from "react-chartjs-2/dist/utils"
+import { redistributionMockData } from "../../mocks/redistribution"
 
 type ForecastTableType = TableProps<DataType> & {
   products?: Product[]
@@ -40,7 +40,7 @@ const warehouseColumns: ColumnsType<DataType> = WAREHOUSES.map((warehouse) => ({
 }))
 
 const columns: ColumnsType<DataType> = [
-  { title: "Название товара", dataIndex: "name", key: "name" },
+  { title: "Название товара", dataIndex: "productName", key: "productName" },
   ...warehouseColumns,
 ]
 
