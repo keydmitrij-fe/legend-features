@@ -8,6 +8,7 @@ import { WAREHOUSES } from "../../mocks/products"
 import { useEffect, useRef, useState } from "react"
 import { ColumnsType } from "antd/es/table"
 import "./ForecastTable.scss"
+import { setLabels } from "react-chartjs-2/dist/utils"
 
 type ForecastTableType = TableProps<DataType> & {
   products?: Product[]
@@ -113,9 +114,19 @@ const ForecastTable: React.FC<ForecastTableType> = ({
                         )
                       })
                     } else {
-                      //
+                      setSelectedProducts((prev) => {
+                        if (!prev) return
+                        const newState = structuredClone(prev)
+                        const currentItem = data.find(
+                          (item) => item.productId === product.id,
+                        )
+                        if (currentItem) {
+                          newState.push(currentItem)
+                        }
+
+                        return newState
+                      })
                     }
-                    console.log(selectedProducts)
                   }}
                   checked={isInSelectedProducts}
                 ></Checkbox>
