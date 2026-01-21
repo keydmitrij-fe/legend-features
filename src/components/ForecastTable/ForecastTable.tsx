@@ -5,7 +5,7 @@ import {
   WarehouseContent,
 } from "../../types/forecast"
 import { WAREHOUSES } from "../../mocks/products"
-import { useEffect, useRef, useState } from "react"
+import { CSSProperties, useEffect, useRef, useState } from "react"
 import { ColumnsType } from "antd/es/table"
 import "./ForecastTable.scss"
 import { setLabels } from "react-chartjs-2/dist/utils"
@@ -21,10 +21,22 @@ type DataType = {
   productId: Product["id"]
 } & WarehouseContent
 
-const warehouseColumns = WAREHOUSES.map((warehouse) => ({
+const warehouseColumns: ColumnsType<DataType> = WAREHOUSES.map((warehouse) => ({
   title: warehouse.name,
   dataIndex: warehouse.name,
   key: warehouse.name,
+  render: (quantity) => {
+    const diff = -2
+    const diffStyle: CSSProperties = {
+      color: diff > 0 ? "green" : "red",
+    }
+    return (
+      <div style={{ display: "flex", gap: ".5rem" }}>
+        <p>{quantity}</p>
+        <p style={diffStyle}>{diff}</p>
+      </div>
+    )
+  },
 }))
 
 const columns: ColumnsType<DataType> = [
