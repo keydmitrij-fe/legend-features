@@ -171,6 +171,7 @@ const ForecastTable: React.FC<ForecastTableType> = ({
       </div>
       <div className="forecast-table__content-container">
         <Table<DataType>
+          scroll={{ x: true }}
           {...props}
           columns={columns}
           dataSource={selectedProducts}
