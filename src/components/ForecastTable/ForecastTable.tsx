@@ -3,6 +3,7 @@ import {
   Product,
   RedistributionPlan,
   WarehouseContent,
+  WarehouseStock,
 } from "../../types/forecast"
 import { WAREHOUSES } from "../../mocks/products"
 import { CSSProperties, useEffect, useRef, useState } from "react"
@@ -25,15 +26,16 @@ const warehouseColumns: ColumnsType<DataType> = WAREHOUSES.map((warehouse) => ({
   title: warehouse.name,
   dataIndex: warehouse.name,
   key: warehouse.name,
-  render: (quantity) => {
-    const diff = -2
+  render: (data: WarehouseStock) => {
+    if (!data.redistribution) return
+    const diff = data.redistribution
     const diffStyle: CSSProperties = {
       color: diff > 0 ? "green" : "red",
     }
     return (
       <div style={{ display: "flex", gap: ".5rem" }}>
-        <p>{quantity}</p>
-        <p style={diffStyle}>{diff}</p>
+        <p>{data.stock}</p>
+        <p style={diffStyle}>{data.redistribution}</p>
       </div>
     )
   },
@@ -61,19 +63,31 @@ const ForecastTable: React.FC<ForecastTableType> = ({
         key: product.name,
         productName: product.name,
         productId: product.id,
-        Екатеринбург: 0,
-        Калининград: 0,
-        Краснодар: 0,
-        Москва: 0,
-        Новосибирск: 0,
-        Спб: 0,
-        Тверь: 0,
+        Екатеринбург: { stock: 0, redistribution: 0 },
+        Калининград: { stock: 0, redistribution: 0 },
+        Краснодар: { stock: 0, redistribution: 0 },
+        Москва: { stock: 0, redistribution: 0 },
+        Новосибирск: { stock: 0, redistribution: 0 },
+        Спб: { stock: 0, redistribution: 0 },
+        Тверь: { stock: 0, redistribution: 0 },
       }
+
+      const redistribution = redistributionMockData.find(
+        (item) => item.productId === product.id,
+      )?.adjustments
 
       product.stocks.forEach((stock) => {
         const warehouseName = stock.name
         const quantity: number = stock.stock
-        result[warehouseName] = quantity
+        const currentStockAdjustments = redistribution?.find(
+          (item) => item.warehouseName === warehouseName,
+        )?.diff
+        if (!currentStockAdjustments) return
+        if (!currentStockAdjustments || !stock) return
+        result[warehouseName] = {
+          stock: quantity,
+          redistribution: currentStockAdjustments,
+        }
       })
 
       return result

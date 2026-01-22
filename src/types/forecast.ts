@@ -24,7 +24,10 @@ export interface Product {
 }
 
 export type WarehouseContent = {
-  [K in (typeof WAREHOUSES)[number]["name"]]: number
+  [K in (typeof WAREHOUSES)[number]["name"]]: Pick<
+    WarehouseStock,
+    "stock" | "redistribution"
+  >
 }
 
 export type WarehouseNamesUnion = (typeof WAREHOUSES)[number]["name"]
@@ -33,6 +36,7 @@ export interface WarehouseStock {
   id: number
   name: WarehouseNamesUnion
   stock: number
+  redistribution?: number
 }
 
 export interface StockAdjustment {
