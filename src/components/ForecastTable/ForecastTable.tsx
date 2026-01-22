@@ -91,7 +91,6 @@ const ForecastTable: React.FC<ForecastTableType> = ({
         }
       })
 
-      console.log(result)
       return result
     })
 
