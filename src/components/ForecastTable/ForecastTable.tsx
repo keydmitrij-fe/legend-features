@@ -27,10 +27,10 @@ const warehouseColumns: ColumnsType<DataType> = WAREHOUSES.map((warehouse) => ({
   dataIndex: warehouse.name,
   key: warehouse.name,
   render: (data: WarehouseStock) => {
-    if (!data.redistribution) return
     const diff = data.redistribution
     const diffStyle: CSSProperties = {
-      color: diff > 0 ? "green" : "red",
+      display: !diff ? "none" : "block",
+      color: diff && diff > 0 ? "green" : "red",
     }
     return (
       <div style={{ display: "flex", gap: ".5rem" }}>
@@ -54,6 +54,7 @@ const ForecastTable: React.FC<ForecastTableType> = ({
   const [data, setData] = useState<DataType[]>([])
   const [selectedProducts, setSelectedProducts] = useState<DataType[]>()
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
+  const [showRedistribution, setShowRedistribution] = useState<boolean>(false)
 
   useEffect(() => {
     if (!products) return
@@ -86,10 +87,11 @@ const ForecastTable: React.FC<ForecastTableType> = ({
         if (!currentStockAdjustments || !stock) return
         result[warehouseName] = {
           stock: quantity,
-          redistribution: currentStockAdjustments,
+          redistribution: showRedistribution ? currentStockAdjustments : 0,
         }
       })
 
+      console.log(result)
       return result
     })
 
@@ -97,12 +99,16 @@ const ForecastTable: React.FC<ForecastTableType> = ({
     if (!selectedProducts) {
       setSelectedProducts(data)
     }
-  }, [products])
+    setSelectedProducts(data)
+  }, [products, showRedistribution])
 
   return (
     <div>
       <div className="forecast-table__action-buttons__container">
-        <Button className="forecast-table__action-buttons">
+        <Button
+          onClick={() => setShowRedistribution((prev) => !prev)}
+          className="forecast-table__action-buttons"
+        >
           Перераспределить остатки
         </Button>
         <Button className="forecast-table__action-buttons">
