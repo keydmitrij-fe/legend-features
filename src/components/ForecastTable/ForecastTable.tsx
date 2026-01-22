@@ -10,6 +10,7 @@ import { CSSProperties, useEffect, useRef, useState } from "react"
 import { ColumnsType } from "antd/es/table"
 import "./ForecastTable.scss"
 import { redistributionMockData } from "../../mocks/redistribution"
+import saveAs from "file-saver"
 
 type ForecastTableType = TableProps<DataType> & {
   products?: Product[]
