@@ -10,7 +10,7 @@ import { CSSProperties, useEffect, useRef, useState } from "react"
 import { ColumnsType } from "antd/es/table"
 import "./ForecastTable.scss"
 import { redistributionMockData } from "../../mocks/redistribution"
-import saveAs from "file-saver"
+import { saveAs } from "file-saver"
 
 type ForecastTableType = TableProps<DataType> & {
   products?: Product[]
@@ -113,7 +113,15 @@ const ForecastTable: React.FC<ForecastTableType> = ({
         >
           Перераспределить остатки
         </Button>
-        <Button className="forecast-table__action-buttons">
+        <Button
+          onClick={() => {
+            saveAs(
+              "https://images.unsplash.com/photo-1635613299702-7aee5f73fb5e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              "beautiful-picture.jpg",
+            )
+          }}
+          className="forecast-table__action-buttons"
+        >
           Скачать Excel
         </Button>
         <Button
