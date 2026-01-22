@@ -108,6 +108,8 @@ const ForecastTable: React.FC<ForecastTableType> = ({
         <Button
           onClick={() => setShowRedistribution((prev) => !prev)}
           className="forecast-table__action-buttons"
+          variant={showRedistribution ? "filled" : "outlined"}
+          color={showRedistribution ? "blue" : "default"}
         >
           Перераспределить остатки
         </Button>
