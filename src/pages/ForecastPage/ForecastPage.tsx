@@ -17,7 +17,7 @@ const { RangePicker } = DatePicker
 const getYearMonth = (date: Dayjs) => date.year() * 12 + date.month()
 const disabled12MonthsDate: DatePickerProps["disabledDate"] = (
   current,
-  { from, type },
+  { from, type }
 ) => {
   if (from) {
     const minDate = from.add(-11, "months")
@@ -90,7 +90,7 @@ const ForecastPage = () => {
           onChange={(selectedProductsIds: Product["id"][]) => {
             if (products) {
               const selectedItems = products.filter((item) =>
-                selectedProductsIds.includes(item.id),
+                selectedProductsIds.includes(item.id)
               )
               setSelectedProducts(selectedItems)
             }
