@@ -1,7 +1,7 @@
 import { productsMock } from "../../mocks/comparison"
 import "./ComparisonPage.scss"
 import ProductCard from "../../components/ProductCard/ProductCard"
-import { Typography } from "antd"
+import { Typography, Input } from "antd"
 
 const { Title, Text } = Typography
 
@@ -21,6 +21,7 @@ const ComparisonPage: React.FC = () => {
       </div>
       <div className="comparison--items">
         <div className="comparison__items__available">
+          <Input placeholder="Введите артикул товара" size="large" />
           {productsMock.map((product) => (
             <ProductCard
               key={product.id}
