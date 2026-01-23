@@ -10,7 +10,16 @@ const ComparisonPage: React.FC = () => {
 
   return (
     <div className="comparison">
-      <ProductCard imageUrl={img} name={name} sku={sku} selected={true} />
+      {productsMock.map((product) => (
+        <ProductCard
+          key={product.id}
+          imageUrl={product.imageUrl}
+          name={product.name}
+          sku={product.sku}
+          selected
+        />
+      ))}
+      {/* <ProductCard imageUrl={img} name={name} sku={sku} selected={true} /> */}
     </div>
   )
 }
