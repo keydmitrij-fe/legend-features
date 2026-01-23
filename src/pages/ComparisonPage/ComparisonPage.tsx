@@ -50,7 +50,16 @@ const ComparisonPage: React.FC = () => {
             группу для сравнения
           </Text>
         </div>
-        <div className="comparison__top-items__controls"></div>
+        <div className="comparison__top-items__controls">
+          <Button
+            className="comparison__items__selected_compare"
+            size="large"
+            variant="filled"
+            color="purple"
+          >
+            Сравнить карточки
+          </Button>
+        </div>
       </div>
       <div className="comparison--items">
         <div className="comparison__items__available">
@@ -72,27 +81,17 @@ const ComparisonPage: React.FC = () => {
           ))}
         </div>
         <div className="comparison__items__selected">
-          <Button
-            className="comparison__items__selected_compare"
-            size="large"
-            variant="filled"
-            color="purple"
-          >
-            Сравнить карточки
-          </Button>
-          <div>
-            <div className="comparison__items__selected__subcontrol-container">
-              <Text className="comparison__items__selected__quantity">
-                Карточки для сравнения: 5 из 5
-              </Text>
-              <Button
-                className="comparison__items__selected__remove-cards"
-                variant="link"
-                color="red"
-              >
-                Удалить все карточки и сравнения
-              </Button>
-            </div>
+          <div className="comparison__items__selected__subcontrol-container">
+            <Text className="comparison__items__selected__quantity">
+              Карточки для сравнения: 5 из 5
+            </Text>
+            <Button
+              className="comparison__items__selected__remove-cards"
+              variant="link"
+              color="red"
+            >
+              Удалить все карточки и сравнения
+            </Button>
           </div>
           {productsMock.map((product) => (
             <ProductCard

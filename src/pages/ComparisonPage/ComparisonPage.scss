@@ -21,6 +21,11 @@
     flex: 1;
   }
 
+  .comparison__top-items__controls {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .comparison__top-items__info {
     display: flex;
     flex-direction: column;
