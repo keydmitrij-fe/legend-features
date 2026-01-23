@@ -10,10 +10,37 @@
   text-align: center;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
-.comparison--title {
-  align-self: flex-start;
+.comparison__top-items {
+  display: flex;
+
+  .comparison__top-items__info,
+  .comparison__top-items__controls {
+    flex: 1;
+  }
+
+  .comparison__top-items__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .comparison--title {
+      margin-bottom: 0;
+    }
+
+    .comparison--title,
+    .comparison--text {
+      text-align: start;
+      align-self: flex-start;
+    }
+  }
+}
+
+.comparison__items__available,
+.comparison__items__selected {
+  //
 }
 
 .comparison--items {
