@@ -38,12 +38,18 @@
   }
 }
 
-.comparison__items__available,
-.comparison__items__selected {
-  //
-}
-
 .comparison--items {
   display: flex;
-  justify-content: space-between;
+
+  .comparison__items__available,
+  .comparison__items__selected {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .comparison__items__available {
+    border-right: 4px solid #f8f8f8;
+  }
 }
