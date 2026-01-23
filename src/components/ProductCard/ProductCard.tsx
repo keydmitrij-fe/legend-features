@@ -3,8 +3,10 @@ import "./ProductCard.scss"
 import { Button, Typography } from "antd"
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons"
 
-type ProductCardType = Pick<Product, "name" | "imageUrl" | "sku"> & {
+type ProductCardType = Pick<Product, "name" | "imageUrl" | "sku" | "id"> & {
   selected: boolean
+  handleProductDelete: (id: Product["id"]) => void
+  handleProductSelect: (id: Product["id"]) => void
 }
 
 const { Text } = Typography
@@ -14,6 +16,9 @@ const ProductCard: React.FC<ProductCardType> = ({
   name,
   sku,
   selected,
+  id,
+  handleProductDelete,
+  handleProductSelect,
 }) => {
   return (
     <div className="product-card">
@@ -26,12 +31,22 @@ const ProductCard: React.FC<ProductCardType> = ({
       </div>
       <div>
         {selected ? (
-          <Button className="product-card__button" variant="link" color="red">
+          <Button
+            onClick={() => handleProductDelete(id)}
+            className="product-card__button"
+            variant="link"
+            color="red"
+          >
             <ArrowLeftOutlined />
             Удалить
           </Button>
         ) : (
-          <Button className="product-card__button" variant="link" color="green">
+          <Button
+            onClick={() => handleProductSelect(id)}
+            className="product-card__button"
+            variant="link"
+            color="green"
+          >
             Добавить
             <ArrowRightOutlined />
           </Button>

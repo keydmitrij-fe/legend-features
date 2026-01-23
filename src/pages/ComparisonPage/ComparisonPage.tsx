@@ -9,9 +9,41 @@ import { debounce } from "../../utils/debounce"
 
 const { Title, Text } = Typography
 
+const MAX_ITEMS_IN_COMPARISON = 5
+
 const ComparisonPage: React.FC = () => {
   const [filteredProducts, setFilteredProducts] =
     useState<Product[]>(productsMock)
+
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
+
+  const handleProductSelect = (id: number) => {
+    const isAlreadySelected = selectedProducts.find((item) => item.id === id)
+    if (selectedProducts.length === MAX_ITEMS_IN_COMPARISON) return
+    if (isAlreadySelected) return
+
+    let itemIndex: number
+    const item = filteredProducts.find((item, index) => {
+      itemIndex = index
+      return item.id === id
+    })
+    if (item) {
+      setSelectedProducts((prev) => {
+        const newState = [...prev]
+        newState.push(item)
+        return newState
+      })
+      setFilteredProducts((prev) => {
+        const newState = [...prev]
+        newState.splice(itemIndex, 1)
+        return newState
+      })
+    }
+  }
+
+  const handleProductDelete = (id: number) => {
+    if (selectedProducts.length === 0) return
+  }
 
   const handleSearch = (value: string) => {
     if (!value) {
@@ -73,6 +105,9 @@ const ComparisonPage: React.FC = () => {
           <div className="comparison__items__available-cards">
             {filteredProducts.map((product) => (
               <ProductCard
+                id={product.id}
+                handleProductSelect={handleProductSelect}
+                handleProductDelete={handleProductDelete}
                 key={product.id}
                 imageUrl={product.imageUrl}
                 name={product.name}
@@ -85,7 +120,8 @@ const ComparisonPage: React.FC = () => {
         <div className="comparison__items__selected">
           <div className="comparison__items__selected__subcontrol-container">
             <Text className="comparison__items__selected__quantity">
-              Карточки для сравнения: 5 из 5
+              Карточки для сравнения: {selectedProducts.length} из{" "}
+              {MAX_ITEMS_IN_COMPARISON}
             </Text>
             <Button
               className="comparison__items__selected__remove-cards"
@@ -96,13 +132,16 @@ const ComparisonPage: React.FC = () => {
             </Button>
           </div>
           <div className="comparison__items__selected-cards">
-            {productsMock.map((product) => (
+            {selectedProducts.map((product) => (
               <ProductCard
+                id={product.id}
                 key={product.id}
                 imageUrl={product.imageUrl}
                 name={product.name}
                 sku={product.sku}
                 selected={true}
+                handleProductDelete={handleProductDelete}
+                handleProductSelect={handleProductSelect}
               />
             ))}
           </div>
