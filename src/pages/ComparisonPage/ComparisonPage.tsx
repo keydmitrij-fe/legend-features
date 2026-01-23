@@ -148,7 +148,7 @@ const ComparisonPage: React.FC = () => {
               variant="link"
               color="red"
             >
-              Удалить все карточки и сравнения
+              Удалить все карточки из сравнения
             </Button>
           </div>
           <div className="comparison__items__selected-cards">
