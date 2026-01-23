@@ -70,6 +70,7 @@ const ComparisonPage: React.FC = () => {
   }
 
   const handleSearchDebounced = debounce(handleSearch, 200)
+  const isSelectDisabled = selectedProducts.length >= MAX_ITEMS_IN_COMPARISON
 
   return (
     <div className="comparison">
@@ -105,6 +106,7 @@ const ComparisonPage: React.FC = () => {
           <div className="comparison__items__available-cards">
             {filteredProducts.map((product) => (
               <ProductCard
+                selectDisabled={isSelectDisabled}
                 id={product.id}
                 handleProductSelect={handleProductSelect}
                 handleProductDelete={handleProductDelete}
@@ -134,6 +136,7 @@ const ComparisonPage: React.FC = () => {
           <div className="comparison__items__selected-cards">
             {selectedProducts.map((product) => (
               <ProductCard
+                selectDisabled={isSelectDisabled}
                 id={product.id}
                 key={product.id}
                 imageUrl={product.imageUrl}

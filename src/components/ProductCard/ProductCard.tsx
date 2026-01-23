@@ -5,6 +5,7 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons"
 
 type ProductCardType = Pick<Product, "name" | "imageUrl" | "sku" | "id"> & {
   selected: boolean
+  selectDisabled: boolean
   handleProductDelete: (id: Product["id"]) => void
   handleProductSelect: (id: Product["id"]) => void
 }
@@ -17,6 +18,7 @@ const ProductCard: React.FC<ProductCardType> = ({
   sku,
   selected,
   id,
+  selectDisabled,
   handleProductDelete,
   handleProductSelect,
 }) => {
@@ -46,6 +48,7 @@ const ProductCard: React.FC<ProductCardType> = ({
             className="product-card__button"
             variant="link"
             color="green"
+            disabled={selectDisabled}
           >
             Добавить
             <ArrowRightOutlined />
