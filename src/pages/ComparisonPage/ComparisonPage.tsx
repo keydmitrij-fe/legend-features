@@ -50,6 +50,7 @@ const ComparisonPage: React.FC = () => {
     if (selectedProducts.length === 0) return
 
     let itemIndex: number
+    let originalStateIndex = productsMock.findIndex((item) => item.id === id)
     const item = selectedProducts.find((item, index) => {
       itemIndex = index
       return item.id === id
@@ -57,7 +58,7 @@ const ComparisonPage: React.FC = () => {
     if (item) {
       setFilteredProducts((prev) => {
         const newState = [...prev]
-        newState.splice(itemIndex - 1, 0, item)
+        newState.splice(originalStateIndex, 0, item)
         return newState
       })
       setSelectedProducts((prev) => {
