@@ -10,6 +10,7 @@ import UsersPage from "./pages/UsersPage/UsersPage"
 import UserEditPage from "./pages/UserEditPage/UserEditPage"
 import ForecastPage from "./pages/ForecastPage/ForecastPage"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import ComparisonPage from "./pages/ComparisonPage/ComparisonPage"
 
 const queryClient = new QueryClient()
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="profile" element={<ProfilePage />} />
           <Route path="users" element={<UsersPage />} />
           <Route path="forecast" element={<ForecastPage />} />
+          <Route path="comparison" element={<ComparisonPage />} />
           <Route path="users/:userId/edit" element={<UserEditPage />} />
         </Route>
 
