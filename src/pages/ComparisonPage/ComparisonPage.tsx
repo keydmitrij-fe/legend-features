@@ -54,7 +54,7 @@ const ComparisonPage: React.FC = () => {
           <Button
             className="comparison__items__selected_compare"
             size="large"
-            variant="filled"
+            variant="solid"
             color="purple"
           >
             Сравнить карточки
