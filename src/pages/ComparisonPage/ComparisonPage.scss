@@ -9,5 +9,14 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   text-align: center;
   display: flex;
+  flex-direction: column;
+}
+
+.comparison--title {
+  align-self: flex-start;
+}
+
+.comparison--items {
+  display: flex;
   justify-content: space-between;
 }
