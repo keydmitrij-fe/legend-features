@@ -14,7 +14,6 @@ const ComparisonPage: React.FC = () => {
           selected
         />
       ))}
-      {/* <ProductCard imageUrl={img} name={name} sku={sku} selected={true} /> */}
     </div>
   )
 }
