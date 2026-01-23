@@ -92,13 +92,11 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="sidebar">
-      <Menu
-        mode="inline"
-        items={items}
-        defaultSelectedKeys={[location.pathname]}
-      />
-    </div>
+    <Menu
+      mode="horizontal"
+      items={items}
+      defaultSelectedKeys={[location.pathname]}
+    />
   )
 }
 
