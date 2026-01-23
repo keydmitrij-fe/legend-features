@@ -70,15 +70,17 @@ const ComparisonPage: React.FC = () => {
             placeholder="Введите артикул или название товара"
             size="large"
           />
-          {filteredProducts.map((product) => (
-            <ProductCard
-              key={product.id}
-              imageUrl={product.imageUrl}
-              name={product.name}
-              sku={product.sku}
-              selected={false}
-            />
-          ))}
+          <div className="comparison__items__available-cards">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                imageUrl={product.imageUrl}
+                name={product.name}
+                sku={product.sku}
+                selected={false}
+              />
+            ))}
+          </div>
         </div>
         <div className="comparison__items__selected">
           <div className="comparison__items__selected__subcontrol-container">
@@ -93,15 +95,17 @@ const ComparisonPage: React.FC = () => {
               Удалить все карточки и сравнения
             </Button>
           </div>
-          {productsMock.map((product) => (
-            <ProductCard
-              key={product.id}
-              imageUrl={product.imageUrl}
-              name={product.name}
-              sku={product.sku}
-              selected={true}
-            />
-          ))}
+          <div className="comparison__items__selected-cards">
+            {productsMock.map((product) => (
+              <ProductCard
+                key={product.id}
+                imageUrl={product.imageUrl}
+                name={product.name}
+                sku={product.sku}
+                selected={true}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -48,11 +48,19 @@
 
   .comparison__items__available,
   .comparison__items__selected {
-    flex: 1;
     display: flex;
     flex-direction: column;
+    flex: 1;
+    padding: 1.5rem;
     gap: 1rem;
-    padding: 1rem;
+  }
+
+  .comparison__items__available-cards,
+  .comparison__items__selected-cards {
+    flex: 1;
+    gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .comparison__items__available {
@@ -60,8 +68,6 @@
   }
 
   .comparison__items__selected {
-    display: flex;
-
     .comparison__items__selected_compare {
       align-self: flex-end;
     }
