@@ -1,19 +1,17 @@
 import { productsMock } from "../../mocks/comparison"
+import "./ComparisonPage.scss"
+import ProductCard from "../../components/ProductCard/ProductCard"
 
 const ComparisonPage: React.FC = () => {
   console.log(productsMock)
+  const name = productsMock[0].name
+  const img = productsMock[0].imageUrl
+  const sku = productsMock[0].sku
+
   return (
-    <>
-      <ul>
-        {productsMock.map((item) => (
-          <li>
-            <p>{item.name}</p>
-            <image>{item.imageUrl}</image>
-            <p>{item.sku}</p>
-          </li>
-        ))}
-      </ul>
-    </>
+    <div className="comparison">
+      <ProductCard imageUrl={img} name={name} sku={sku} />
+    </div>
   )
 }
 

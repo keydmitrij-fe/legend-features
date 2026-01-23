@@ -4,52 +4,52 @@ import { Product } from "../types/Comparison"
 const PRODUCT_CATALOG = [
   {
     name: "Майка хлопковая базовая",
-    sku: 482913,
+    sku: 482901312,
     imageUrl: "https://picsum.photos/seed/tshirt1/300/300",
   },
   {
     name: "Джинсы прямые синие",
-    sku: 593827,
+    sku: 591838127,
     imageUrl: "https://picsum.photos/seed/jeans1/300/300",
   },
   {
     name: "Худи оверсайз с капюшоном",
-    sku: 671204,
+    sku: 267912049,
     imageUrl: "https://picsum.photos/seed/hoodie1/300/300",
   },
   {
     name: "Кроссовки повседневные",
-    sku: 784391,
+    sku: 728043921,
     imageUrl: "https://picsum.photos/seed/sneakers1/300/300",
   },
   {
     name: "Рубашка льняная летняя",
-    sku: 815672,
+    sku: 181506722,
     imageUrl: "https://picsum.photos/seed/shirt1/300/300",
   },
   {
     name: "Куртка демисезонная",
-    sku: 902458,
+    sku: 510245384,
     imageUrl: "https://picsum.photos/seed/jacket1/300/300",
   },
   {
     name: "Шорты спортивные",
-    sku: 734189,
+    sku: 273421389,
     imageUrl: "https://picsum.photos/seed/shorts1/300/300",
   },
   {
     name: "Свитер шерстяной",
-    sku: 856920,
+    sku: 825692501,
     imageUrl: "https://picsum.photos/seed/sweater1/300/300",
   },
   {
     name: "Платье повседневное",
-    sku: 918374,
+    sku: 191838974,
     imageUrl: "https://picsum.photos/seed/dress1/300/300",
   },
   {
     name: "Брюки чинос",
-    sku: 649583,
+    sku: 624395830,
     imageUrl: "https://picsum.photos/seed/chinos1/300/300",
   },
 ]
