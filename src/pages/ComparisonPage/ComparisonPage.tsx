@@ -2,10 +2,32 @@ import { productsMock } from "../../mocks/comparison"
 import "./ComparisonPage.scss"
 import ProductCard from "../../components/ProductCard/ProductCard"
 import { Typography, Input } from "antd"
+import { useState } from "react"
+import { Product } from "../../types/Comparison"
+import { debounce } from "../../utils/debounce"
+import { SearchOutlined } from "@ant-design/icons"
 
 const { Title, Text } = Typography
 
 const ComparisonPage: React.FC = () => {
+  const [filteredProducts, setFilteredProducts] =
+    useState<Product[]>(productsMock)
+
+  const handleSearch = (value: string) => {
+    if (!value) {
+      setFilteredProducts(productsMock)
+      return
+    }
+    const filteredData = productsMock.filter((item) => {
+      const matchedSku = String(item.sku).match(value)?.input
+      if (matchedSku) {
+        return +matchedSku === item.sku
+      }
+    })
+
+    setFilteredProducts(filteredData)
+  }
+
   return (
     <div className="comparison">
       <div className="comparison__top-items">
@@ -21,8 +43,14 @@ const ComparisonPage: React.FC = () => {
       </div>
       <div className="comparison--items">
         <div className="comparison__items__available">
-          <Input placeholder="Введите артикул товара" size="large" />
-          {productsMock.map((product) => (
+          <Input
+            suffix={<SearchOutlined />}
+            onChange={(e) => handleSearch(e.currentTarget.value)}
+            type="number"
+            placeholder="Введите артикул товара"
+            size="large"
+          />
+          {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
               imageUrl={product.imageUrl}
