@@ -43,6 +43,24 @@ const ComparisonPage: React.FC = () => {
 
   const handleProductDelete = (id: number) => {
     if (selectedProducts.length === 0) return
+
+    let itemIndex: number
+    const item = selectedProducts.find((item, index) => {
+      itemIndex = index
+      return item.id === id
+    })
+    if (item) {
+      setFilteredProducts((prev) => {
+        const newState = [...prev]
+        newState.splice(itemIndex - 1, 0, item)
+        return newState
+      })
+      setSelectedProducts((prev) => {
+        const newState = [...prev]
+        newState.splice(itemIndex, 1)
+        return newState
+      })
+    }
   }
 
   const handleSearch = (value: string) => {
