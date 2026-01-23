@@ -1,7 +1,7 @@
 import { productsMock } from "../../mocks/comparison"
 import "./ComparisonPage.scss"
 import ProductCard from "../../components/ProductCard/ProductCard"
-import { Typography, Input, Select } from "antd"
+import { Typography, Input, Button } from "antd"
 import { useState } from "react"
 import { Product } from "../../types/Comparison"
 import { SearchOutlined } from "@ant-design/icons"
@@ -72,6 +72,28 @@ const ComparisonPage: React.FC = () => {
           ))}
         </div>
         <div className="comparison__items__selected">
+          <Button
+            className="comparison__items__selected_compare"
+            size="large"
+            variant="filled"
+            color="purple"
+          >
+            Сравнить карточки
+          </Button>
+          <div>
+            <div className="comparison__items__selected__subcontrol-container">
+              <Text className="comparison__items__selected__quantity">
+                Карточки для сравнения: 5 из 5
+              </Text>
+              <Button
+                className="comparison__items__selected__remove-cards"
+                variant="link"
+                color="red"
+              >
+                Удалить все карточки и сравнения
+              </Button>
+            </div>
+          </div>
           {productsMock.map((product) => (
             <ProductCard
               key={product.id}

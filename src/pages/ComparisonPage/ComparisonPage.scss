@@ -53,4 +53,25 @@
   .comparison__items__available {
     border-right: 4px solid #f8f8f8;
   }
+
+  .comparison__items__selected {
+    display: flex;
+
+    .comparison__items__selected_compare {
+      align-self: flex-end;
+    }
+    .comparison__items__selected__subcontrol-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .comparison__items__selected__quantity {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .comparison__items__selected__remove-cards {
+      //
+    }
+  }
 }
