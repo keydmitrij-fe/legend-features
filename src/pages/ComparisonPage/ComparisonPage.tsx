@@ -17,6 +17,11 @@ const ComparisonPage: React.FC = () => {
 
   const [selectedProducts, setSelectedProducts] = useState<Product[]>([])
 
+  const clearComparisonPool = () => {
+    setFilteredProducts(productsMock)
+    setSelectedProducts([])
+  }
+
   const handleProductSelect = (id: number) => {
     const isAlreadySelected = selectedProducts.find((item) => item.id === id)
     if (selectedProducts.length === MAX_ITEMS_IN_COMPARISON) return
@@ -147,6 +152,7 @@ const ComparisonPage: React.FC = () => {
               className="comparison__items__selected__remove-cards"
               variant="link"
               color="red"
+              onClick={clearComparisonPool}
             >
               Удалить все карточки из сравнения
             </Button>
