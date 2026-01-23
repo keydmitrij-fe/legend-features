@@ -10,7 +10,7 @@ const ComparisonPage: React.FC = () => {
 
   return (
     <div className="comparison">
-      <ProductCard imageUrl={img} name={name} sku={sku} />
+      <ProductCard imageUrl={img} name={name} sku={sku} selected={true} />
     </div>
   )
 }

@@ -1,11 +1,20 @@
 import { Product } from "../../types/Comparison"
 import "./ProductCard.scss"
 import { Button, Typography } from "antd"
-type ProductCardType = Pick<Product, "name" | "imageUrl" | "sku">
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons"
+
+type ProductCardType = Pick<Product, "name" | "imageUrl" | "sku"> & {
+  selected: boolean
+}
 
 const { Text } = Typography
 
-const ProductCard: React.FC<ProductCardType> = ({ imageUrl, name, sku }) => {
+const ProductCard: React.FC<ProductCardType> = ({
+  imageUrl,
+  name,
+  sku,
+  selected,
+}) => {
   return (
     <div className="product-card">
       <div className="product-card__info">
@@ -16,9 +25,17 @@ const ProductCard: React.FC<ProductCardType> = ({ imageUrl, name, sku }) => {
         </div>
       </div>
       <div>
-        <Button className="product-card__button" variant="link" color="blue">
-          Добавить ➡ ️
-        </Button>
+        {selected ? (
+          <Button className="product-card__button" variant="link" color="red">
+            <ArrowLeftOutlined />
+            Удалить
+          </Button>
+        ) : (
+          <Button className="product-card__button" variant="link" color="green">
+            Добавить
+            <ArrowRightOutlined />
+          </Button>
+        )}
       </div>
     </div>
   )
