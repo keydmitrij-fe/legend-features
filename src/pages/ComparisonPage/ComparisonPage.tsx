@@ -31,7 +31,7 @@ const ComparisonPage: React.FC = () => {
             />
           ))}
         </div>
-        <div className="comparison__items_selected">
+        <div className="comparison__items__selected">
           {productsMock.map((product) => (
             <ProductCard
               key={product.id}
